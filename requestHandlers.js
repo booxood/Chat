@@ -41,12 +41,19 @@ function login(response,request){
         var post = '';
         request.on('data',function(chunk){
             post += chunk;
+            if(post.length > 100){
+                console.log('post.length:' + post.length);
+                request.emit('end');
+            }
         });
 
         request.on('end',function(){
             console.log('post:'+post);
             post = querystring.parse(post);
-            response.end(util.inspect(post));
+            var username = post['username'];
+            var password = post['password'];
+
+            response.end(username+':'+password);
         });
     };
 };

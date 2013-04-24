@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 exports.PORT = 8080;
+
 exports.MIME = {
     'css':'text/css',
     'html':'text/html',
@@ -15,3 +16,8 @@ exports.MIME = {
     'ico':'image/x-icon',
     'jpeg':'image/jpeg'
 };
+
+exports.db = {
+    dbName:'chat',
+    host:'localhost'
+}
