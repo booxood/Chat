@@ -32,14 +32,6 @@ function route(handle,pathname,response,request){
                         var contentType = config.MIME[ext] || 'text/plain';
                         response.setHeader('Content-Type',contentType);
                         response.setHeader('Content-Length',stats.size);
-//                        fs.readFile(realPath,function(err,data){
-//                            if(err){
-//                                console.log('err......');
-//                            }else{
-//                                response.writeHead(200);
-//                                response.end(data);
-//                            }
-//                        });
                         var raw = fs.createReadStream(realPath);
                         response.writeHead(200);
                         raw.pipe(response);

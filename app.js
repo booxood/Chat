@@ -15,6 +15,7 @@ var handle = [];
 handle['/'] = requestHandlers.index;
 handle['/login'] = requestHandlers.login;
 handle['/signup'] = requestHandlers.signup;
+handle['/chat'] = requestHandlers.chat;
 
 var listen = [];
 listen.push(['on','disconnect',socketListens.onDisconnect]);

@@ -6,7 +6,5 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var socket = io.connect('http://localhost:8080');
-socket.on('news',function(data){
-    console.log('client socket happen~~~~~~~:'+data.msg);
-});
+
+alert('chat..');

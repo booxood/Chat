@@ -12,10 +12,18 @@ var user = new User({
     name : 'Jim',
     password : '123'
 });
-user.save(function(err,user){
-    if(err){
-        console.log('err:'+err);
-    }else{
-        console.log('save ok:' + util.inspect(user));
+//user.save(function(err,user){
+//    if(err){
+//        console.log('err:' + err);
+//    }else{
+//        console.log('save ok:' + util.inspect(user));
+//    }
+//});
+
+User.get('a',function(err,user){
+    if(err || !user){
+        console.log('faild:'+ err + ':' + util.inspect(user));
+    }else if(user){
+        console.log('get ok:' + util.inspect(user));
     }
 });

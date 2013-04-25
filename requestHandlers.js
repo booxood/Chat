@@ -9,6 +9,7 @@ var fs = require('fs');
 var path = require('path');
 var querystring = require('querystring');
 var util = require('util');
+var User = require('./models/user');
 
 function responseFile(filePath,response){
     var realPath = path.join(__dirname,path.normalize(filePath));
@@ -29,7 +30,7 @@ function responseFile(filePath,response){
 
 function index(response,request){
     if(request.method == "GET"){
-        responseFile('/public/views/index.html',response);
+        responseFile('/public/views/login.html',response);
     };
 };
 
@@ -52,20 +53,44 @@ function login(response,request){
             post = querystring.parse(post);
             var username = post['username'];
             var password = post['password'];
-
-            response.end(username+':'+password);
+            User.get(username,function(err,user){
+                if(err || !user){
+                    responseFile('/public/views/login.html',response);
+                }else if(user){
+                    if(user.password == password){
+                        //set session
+                        //responseFile('/public/views/chat.html',response);
+                        response.statusCode = 302;
+                        response.setHeader('Location','/chat');
+                        response.end();
+                    }else{
+                        responseFile('/public/views/login.html',response);
+                    }
+                }
+            });
         });
     };
 };
+
+function chat(response,request){
+    if(request.method == "GET"){
+        responseFile('/public/views/chat.html',response);
+    }else if(request.method == "POST"){
+        response.setHeader('Content-Type','text/html');
+        response.end('<h1>chat.. 待续...</h1>')
+    }
+}
 
 function signup(response,request){
     if(request.method == "GET"){
         responseFile('/public/views/signup.html',response);
     }else if(request.method == "POST"){
-
+        response.setHeader('Content-Type','text/html');
+        response.end('<h1>signup... 待续...</h1>')
     }
 };
 
 exports.index = index;
 exports.login = login;
 exports.signup = signup;
+exports.chat = chat;
