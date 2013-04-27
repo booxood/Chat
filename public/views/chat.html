@@ -21,25 +21,24 @@
       }
 
       .container {
+        background: url(../img/batthern.png) repeat 0 0;
         margin-top: 40px;
         width: auto;
-        max-width: 680px;
-        height: 540px;
+        max-width: 695px;
+        height: 522px;
         border: solid 1px;
       }
 
       .left{
         float: left;
-        margin: 10px;
-        border: solid 1px;
-        width: 460px;
+        margin: 1px;
+        width: 585px;
       }
 
       .right{
         float: right;
-        margin: 10px;
-        border: solid 1px;
-        width: 160px;
+        margin: 1px;
+        width: 100px;
 
       }
 
@@ -48,21 +47,37 @@
       }
 
       .content{
-        margin: 10px;
-        border: solid 1px; 
-        height: 420px;
+        margin: 1px;
+        height: 480px;
       }
 
       .input{
-        margin: 10px;
-        border: solid 1px;
+        margin: 1px;
+        height: 40px;
       }
 
       .list{
-        margin: 10px;
-        border: solid 1px;
+        margin: 1px;
         height: 520px;
 
+      }
+      .inputDiv{
+          margin-top: 10px;
+          #width: 100%;
+          float:left;
+          #clear:none;
+      }
+      #inputContent{
+          width:420px;
+      }
+      .label{
+          float:left;
+          clear:left;
+          margin: 2px;
+          width: 80%;
+          height: 20px;
+          font-size:16px;
+          display: inline-block;
       }
     </style>
     <link href="../css/bootstrap-responsive.min.css" rel="stylesheet">
@@ -75,20 +90,40 @@
 
   <body>
 
-    <div class="container">
+    <div class="container well">
 
       <div class="left">
         <div class="content clear-left">
-            <h1>Sticky footer</h1>
+            <span class="label ">卫生状况也很好。</span>
+            <span class="label label-important">里面的硬件设备还不错</span>
+            <span class="label label-success">周围环境挺好的</span>
         </div>
         <div class="input clear-left">
-            <h1>Sticky footer</h1>
+            <div class="btn-group inputDiv">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    所有人
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- dropdown menu links -->
+                    <li>
+                        <a>---------</a>
+                    </li>
+                    <li>
+                        <a>所有人</a>
+                    </li>
+                </ul>
+            </div>
+            <input class="inputDiv" id="inputContent" type="text" placeholder="说点什么…">
+            <button class="btn btn-primary inputDiv" type="button">发送</button>
         </div>
       </div>
 
       <div class="right">
+        <h4>在线人员</h4>
         <div class="list">
-            <h1>Sticky footer</h1>
+          <span class="label label-info">哈哈</span>
+
         </div>
       </div>
 
