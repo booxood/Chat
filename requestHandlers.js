@@ -10,6 +10,7 @@ var path = require('path');
 var querystring = require('querystring');
 var util = require('util');
 var User = require('./models/user');
+var session = require('./session');
 
 function responseFile(filePath,response){
     var realPath = path.join(__dirname,path.normalize(filePath));
@@ -59,6 +60,9 @@ function login(response,request){
                 }else if(user){
                     if(user.password == password){
                         //set session
+                        var sid = session.genSID(user.name);
+                        session.setSession(sid);
+                        response.setHeader('Set-Cookie',['sid=' + sid]);
                         //responseFile('/public/views/chat.html',response);
                         response.statusCode = 302;
                         response.setHeader('Location','/chat');
@@ -73,11 +77,15 @@ function login(response,request){
 };
 
 function chat(response,request){
-    if(request.method == "GET"){
+    if(request.cookie && request.cookie.sid &&
+       session.getSession(request.cookie.sid)){
+
+        session.updateSession(request.cookie.sid)
         responseFile('/public/views/chat.html',response);
-    }else if(request.method == "POST"){
-        response.setHeader('Content-Type','text/html');
-        response.end('<h1>chat.. 待续...</h1>')
+    }else{
+        response.statusCOde = 302;
+        response.setHeader('Location','/login');
+        response.end();
     }
 }
 
