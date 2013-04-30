@@ -11,6 +11,7 @@ var querystring = require('querystring');
 var util = require('util');
 var User = require('./models/user');
 var session = require('./session');
+var cookie = require('./cookie');
 
 function responseFile(filePath,response){
     var realPath = path.join(__dirname,path.normalize(filePath));
@@ -77,14 +78,17 @@ function login(response,request){
 };
 
 function chat(response,request){
-    if(request.cookie && request.cookie.sid &&
-       session.getSession(request.cookie.sid)){
 
-        session.updateSession(request.cookie.sid)
-        responseFile('/public/views/chat.html',response);
+    var cookies = cookie(request);
+
+    if(cookies['sid']){
+        if(session.getSession(cookies['sid'])){
+            session.updateSession(cookies.sid);
+            responseFile('/public/views/chat.html',response);
+        }
     }else{
-        response.statusCOde = 302;
-        response.setHeader('Location','/login');
+        response.statusCode = 302;
+        response.setHeader('Location','/');
         response.end();
     }
 }

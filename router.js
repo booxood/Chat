@@ -11,7 +11,6 @@ var config = require('./config');
 
 function route(handle,pathname,response,request){
     if(typeof handle[pathname] === 'function'){
-
         handle[pathname](response,request);
     }else{
         var realPath = path.join('public',path.normalize(pathname.replace(/\.\./g,'')));
