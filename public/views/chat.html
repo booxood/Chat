@@ -10,10 +10,6 @@
     <!-- CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
-
-      /* Sticky footer styles
-      -------------------------------------------------- */
-
       html,
       body {
         margin: 0;
@@ -21,7 +17,7 @@
       }
 
       .container {
-        background: url(../img/batthern.png) repeat 0 0;
+        #background: url(../img/batthern.png) repeat 0 0;
         margin-top: 40px;
         width: auto;
         max-width: 695px;
@@ -93,15 +89,12 @@
     <div class="container well">
 
       <div class="left">
-        <div class="content clear-left">
-            <span class="label ">卫生状况也很好。</span>
-            <span class="label label-important">里面的硬件设备还不错</span>
-            <span class="label label-success">周围环境挺好的</span>
+        <div id="contents" class="content clear-left">
         </div>
         <div class="input clear-left">
             <div class="btn-group inputDiv">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                    所有人
+                <a id="to" class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                    all
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -110,20 +103,18 @@
                         <a>---------</a>
                     </li>
                     <li>
-                        <a>所有人</a>
+                        <a>all</a>
                     </li>
                 </ul>
             </div>
-            <input class="inputDiv" id="inputContent" type="text" placeholder="说点什么…">
-            <button class="btn btn-primary inputDiv" type="button">发送</button>
+            <input class="inputDiv" id="inputContent" type="text" placeholder="说点什么..." />
+            <button id="sendBtn" class="btn btn-primary inputDiv" type="button">发送</button>
         </div>
       </div>
 
       <div class="right">
         <h4>在线人员</h4>
-        <div class="list">
-          <span class="label label-info">哈哈</span>
-
+        <div id="users" class="list">
         </div>
       </div>
 
@@ -134,6 +125,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/json2.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/chat.js"></script>
 
   </body>
 </html>

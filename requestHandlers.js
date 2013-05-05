@@ -91,7 +91,7 @@ function chat(response,request){
         response.setHeader('Location','/');
         response.end();
     }
-}
+};
 
 function signup(response,request){
     if(request.method == "GET"){

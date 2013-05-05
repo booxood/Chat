@@ -1,4 +1,4 @@
 Chat
 ====
 
-基于nodejs的聊天网站
+基于nodejs的聊天应用

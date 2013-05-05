@@ -9,6 +9,9 @@ var socketIO = require('socket.io');
 function start(app,listen){
     var io = socketIO.listen(app,{log:false});
     var userList = [];
+    //[[username,socket],
+    // [username,socket],...]
+
     io.sockets.on('connection',function(socket){
 
         console.log('socket.id :' + socket.id);
