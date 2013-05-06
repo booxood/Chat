@@ -15,11 +15,15 @@ window.onload = function(){
 
     socket.on('online',function(data){
         addContent(data.username+' 上线了',1);
-        addUser(data.username);
+        flushUserList(data.userList);
     });
 
     socket.on('news',function(data){
-        if(data.to == 'all'){
+
+        if(data.from == data.to){
+            addContent('你很寂寞的对自己说:' + data.msg,2);
+        }
+        else if(data.to == 'all'){
             if(data.from == user){
                 addContent('你对大家说:' + data.msg);
             }else{
@@ -85,6 +89,21 @@ function addContent(content,type){
     contentsDiv.appendChild(contentSpan);
 };
 
+function flushUserList(userList){
+    var usersDiv = document.getElementById('users');
+    deleteElement(usersDiv,'span');
+    for(var i in userList){
+        addUser(userList[i]);
+    };
+};
+
+function deleteElement(parentElement,element){
+    for(var l = parentElement.childNodes.length -1;l>=0;l--){
+        var childNode = parentElement.childNodes[l];
+        parentElement.removeChild(childNode);
+    }
+};
+
 function addUser(user){
     var usersDiv = document.getElementById('users');
     var userSpan = document.createElement('span');
@@ -93,7 +112,7 @@ function addUser(user){
     userSpan.className = 'label label-info';
     userSpan.ondblclick = setTo(userSpan);
     usersDiv.appendChild(userSpan);
-}
+};
 
 function addClass(element,value){
     if(!element.className){

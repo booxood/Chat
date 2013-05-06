@@ -40,11 +40,25 @@ function onChat(socket,userList){
 
 function onOnline(socket,userList){
     var _func = function(data){
-        console.log('----online----:' + data.username);
-        for(var i=0;i<userList.length;i++){
-            userList[i][1].emit('online',{username:data.username});
+        var users = [];
+        var flag = true;
+        for(var u in  userList){
+            if(userList[u][0] != data.username){
+                users.push(userList[u][0]);
+            }else{
+                userList[u][1] = socket;
+                flag = false;
+            }
         };
-        userList.push([data.username,socket]);
+        if(flag){
+            userList.push([data.username,socket]);
+            users.push(data.username);
+        };
+
+        for(var i=0;i<userList.length;i++){
+            userList[i][1].emit('online',{username:data.username,userList:users});
+        };
+
     };
     return _func;
 };
