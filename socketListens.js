@@ -43,9 +43,8 @@ function onOnline(socket,userList){
         var users = [];
         var flag = true;
         for(var u in  userList){
-            if(userList[u][0] != data.username){
-                users.push(userList[u][0]);
-            }else{
+            users.push(userList[u][0]);
+            if(userList[u][0] == data.username){
                 userList[u][1] = socket;
                 flag = false;
             }

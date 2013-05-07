@@ -9,7 +9,7 @@ var User = require('./user');
 var util = require('util');
 
 var user = new User({
-    name : 'Jim',
+    name : 'Lucy',
     password : '123'
 });
 //user.save(function(err,user){
@@ -20,10 +20,10 @@ var user = new User({
 //    }
 //});
 
-User.get('a',function(err,user){
-    if(err || !user){
-        console.log('faild:'+ err + ':' + util.inspect(user));
-    }else if(user){
-        console.log('get ok:' + util.inspect(user));
-    }
-});
+//User.get('a',function(err,user){
+//    if(err || !user){
+//        console.log('faild:'+ err + ':' + util.inspect(user));
+//    }else if(user){
+//        console.log('get ok:' + util.inspect(user));
+//    }
+//});

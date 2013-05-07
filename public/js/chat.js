@@ -40,15 +40,17 @@ window.onload = function(){
     });
 
     addSendEvent(socket,user);
-    addChangeEvent();
+    addChangeToEvent();
 };
 
-function addChangeEvent(){
+function addChangeToEvent(){
     var usersDiv = document.getElementById('users');
     var usersSpan = usersDiv.getElementsByTagName('span');
     for(var i in usersSpan){
         usersSpan[i].ondblclick = setTo(usersSpan[i]);
-    }
+    };
+    var toAll = document.getElementById('toAll');
+    toAll.onclick = setTo(toAll);
 };
 
 function setTo(element){
@@ -63,6 +65,9 @@ function addSendEvent(socket,user){
     var toElement = document.getElementById('to');
     var inputElement = document.getElementById('inputContent');
     sendBtn.onclick = function(){
+        if(trim(inputElement.value) == ''){
+            return;
+        }
         var data = {
             from:user,
             to:trim(toElement.text),
