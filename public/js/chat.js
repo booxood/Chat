@@ -13,11 +13,18 @@ window.onload = function(){
     socket.emit('online',{username:user});
     document.title += ' - ' + user;
 
+//    socket.on('reconnect',function(){
+//        socket.emit('reconnect',{username:user});
+//    });
+
     socket.on('online',function(data){
         addContent(data.username+' 上线了',1);
         flushUserList(data.userList);
     });
-
+    socket.on('offline',function(data){
+        addContent(data.username+' 下线了',1);
+        flushUserList(data.userList);
+    });
     socket.on('news',function(data){
 
         if(data.from == data.to){

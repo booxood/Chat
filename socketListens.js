@@ -12,10 +12,27 @@ function emitNews(){
     return {msg:'hello world'};
 };
 
-function onDisconnect(socket){
+function onDisconnect(socket,userList){
     var _func = function(){
 //        console.log('on disconnect :'+ typeof socket);
-        console.log('socket.id :' + socket.id + ' , disconnect');
+//        console.log('onDisconnect--socket.id :' + socket.id);
+//        console.log('onDisconnect--userList:' + util.inspect(userList));
+        var username = '';
+        var users = [];
+        for(var u in userList){
+            if(userList[u][1] == socket){
+                username = userList[u][0];
+                userList.splice(u,1);
+//                console.log('onDisconnect--for--if--userList:' + util.inspect(userList));
+            }else{
+                users.push(userList[u][0]);
+            }
+        };
+        if(username != ''){
+            for(var u in userList){
+                userList[u][1].emit('offline',{username:username,userList:users});
+            };
+        };
     }
     return _func;
 };
@@ -40,6 +57,7 @@ function onChat(socket,userList){
 
 function onOnline(socket,userList){
     var _func = function(data){
+//        console.log('onOnline-1-userList:' + util.inspect(userList));
         var users = [];
         var flag = true;
         for(var u in  userList){
@@ -53,7 +71,7 @@ function onOnline(socket,userList){
             userList.push([data.username,socket]);
             users.push(data.username);
         };
-
+//        console.log('onOnline-2-userList:' + util.inspect(userList));
         for(var i=0;i<userList.length;i++){
             userList[i][1].emit('online',{username:data.username,userList:users});
         };
