@@ -43,7 +43,8 @@ User.get = function(username,callback){
 User.prototype.save = function(callback){
     var user = {
         name : this.name,
-        password : this.password
+        password : this.password,
+        phone : this.phone || ''
     }
     mongodb.open(function(err,db){
         if(err){

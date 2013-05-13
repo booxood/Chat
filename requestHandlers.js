@@ -30,6 +30,24 @@ function responseFile(filePath,response){
     stream.pipe(response);
 };
 
+function replaceFile(filePath,msg,response){
+    var realPath = path.join(__dirname,path.normalize(filePath));
+    fs.readFile(realPath,function(err,data){
+            if(err){
+                response.writeHead(500);
+                response.end('read file index.html error!');
+            }
+//            for(var r in replaceArr){
+//                data.replace(/r/)
+//            }
+//            console.log('type of data:'+typeof data);
+            data = data.toString().replace(/\$MSG/g,msg);
+            response.writeHead(200);
+            response.end(data);
+        }
+    )
+};
+
 function index(response,request){
     if(request.method == "GET"){
         responseFile('/public/views/login.html',response);
@@ -45,7 +63,7 @@ function login(response,request){
         request.on('data',function(chunk){
             post += chunk;
             if(post.length > 100){
-                console.log('post.length:' + post.length);
+                console.log('login post.length:' + post.length);
                 request.emit('end');
             }
         });
@@ -96,8 +114,52 @@ function signup(response,request){
     if(request.method == "GET"){
         responseFile('/public/views/signup.html',response);
     }else if(request.method == "POST"){
-        response.setHeader('Content-Type','text/html');
-        response.end('<h1>signup... 待续...</h1>')
+        var post = '';
+        request.on('data',function(chunk){
+            post += chunk;
+            if(post.length > 100){
+                console.log('signup post.length:' + post.length);
+                return replaceFile('/public/views/signup_msg.html','敲这么多不累嘛',response);
+            }
+        });
+        request.on('end',function(){
+            console.log('post:'+post);
+            post = querystring.parse(post);
+            var username = post['username'];
+            var password = post['password'];
+            var repassword = post['repassword'];
+            var phone = post['phone'];
+
+            if(username == '' || password == ''){
+                return replaceFile('/public/views/signup_msg.html','用户名或密码不能为空',response);
+            }
+            if(password != repassword){
+                return replaceFile('/public/views/signup_msg.html','两次密码不一致',response);
+            }
+            User.get(username,function(err,user){
+                if(err){
+                    return replaceFile('/public/views/signup_msg.html',err,response);
+                }
+                if(user){
+                    return replaceFile('/public/views/signup_msg.html','已经有叫 ' + username+' 的啦',response);
+                }
+
+                var user = new User({
+                    'name':username,
+                    'password':password,
+                    'phone':phone
+                });
+
+                user.save(function(err){
+                    if(err){
+                        return replaceFile('/public/views/signup_msg.html',err,response);
+                    }
+                    response.statusCode = 302;
+                    response.setHeader('Location','/login');
+                    response.end();
+                });
+            });
+        });
     }
 };
 

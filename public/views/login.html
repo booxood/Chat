@@ -57,7 +57,7 @@
               <input type="checkbox"> 记住我
             </label>
             <button type="submit" class="btn btn-primary">登录</button>
-            <button type="button" class="btn btn-primary">注册</button>
+            <button id="signupBtn" type="button" class="btn btn-primary">注册</button>
           </div>
 
         </div>
@@ -68,6 +68,13 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../js/jquery.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-
+    <script type="text/javascript">
+        window.onload = function(){
+            var signupBtn = document.getElementById('signupBtn');
+            signupBtn.onclick = function(){
+                window.location.href = '/signup';
+            }
+        }
+    </script>
   </body>
 </html>
