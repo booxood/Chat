@@ -7,6 +7,7 @@
  */
 window.onload = function(){
     var host = 'http://localhost:8080';
+    //var host = 'http://chat-app.ap01.aws.af.cm';
     var socket = io.connect(host);
     var cookies = getCookie();
     var user = cookies['sid'].split('|')[0];
@@ -24,6 +25,9 @@ window.onload = function(){
     socket.on('offline',function(data){
         addContent(data.username+' 下线了',1);
         flushUserList(data.userList);
+    });
+    socket.on('forcedOffline',function(data){
+        addContent(data.username+'，你被迫下线了',1);
     });
     socket.on('news',function(data){
 

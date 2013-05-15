@@ -8,5 +8,7 @@
 var config = require('../config');
 var mongodb = require('mongodb');
 
-var server = new mongodb.Server(config.db.host,mongodb.Connection.DEFAULT_PORT,{auto_reconnect:true});
-module.exports = new mongodb.Db(config.db.dbName,server,{safe:true});
+
+
+var server = new mongodb.Server(config.db.hostname,config.db.port,{auto_reconnect:true});
+module.exports = new mongodb.Db(config.db.db,server,{safe:true});

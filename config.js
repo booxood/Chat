@@ -17,7 +17,28 @@ exports.MIME = {
     'jpeg':'image/jpeg'
 };
 
-exports.db = {
-    dbName:'chat',
-    host:'localhost'
+//for appfog
+if(process.env.VCAP_SERVICES){
+    var env = JSON.parse(process.env.VCAP_SERVICES);
+    var mongo = env['mongodb-1.8'][0]['credentials'];
 }
+else{
+    var mongo = {
+        "hostname":"localhost",
+        "port":27017,
+        "username":"",
+        "password":"",
+        "name":"",
+        "db":"chat"
+    }
+}
+var generate_mongo_url = function(obj){
+    obj.hostname = (obj.hostname || 'localhost');
+    obj.port = (obj.port || 27017);
+    obj.db = (obj.db || 'test');
+    if(obj.username && obj.password){
+        obj.hostname = obj.username + ":" + obj.password + "@" + obj.hostname;
+    }
+    return obj;
+}
+exports.db = generate_mongo_url(mongo);

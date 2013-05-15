@@ -63,6 +63,7 @@ function onOnline(socket,userList){
         for(var u in  userList){
             users.push(userList[u][0]);
             if(userList[u][0] == data.username){
+                userList[u][1].emit('forcedOffline',{username:data.username});
                 userList[u][1] = socket;
                 flag = false;
             }
