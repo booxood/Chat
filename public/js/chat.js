@@ -28,6 +28,7 @@ window.onload = function(){
     });
     socket.on('forcedOffline',function(data){
         addContent(data.username+'，你被迫下线了',1);
+        delCookie('sid');
     });
     socket.on('news',function(data){
 
@@ -152,6 +153,28 @@ function getCookie(){
     }
     return cookies;
 };
+
+//function delCookie(key){
+//    if(!document.cookie){
+//        return false;
+//    }
+//    var cookieArray = document.cookie.split(';');
+//    for(var c in cookieArray){
+//        var cc = cookieArray[c].split('=');
+//        if(trim(cc[0]) == key){
+//            delete cookieArray[c];
+//        }
+//    }
+//    document.cookie = cookieArray.join(';');
+//    alert('1:' + document.cookie);
+//}
+
+function delCookie(key){
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = getCookie(key);
+    document.cookie = key + '=' + cval + ';expires=' + exp.toGMTString();
+}
 
 function trim(str){
     return str.replace(/^\s+|\s+$/g,'');
